@@ -7,22 +7,23 @@ namespace Davajlama\WebBuilder;
  */
 class Builder
 {
-    /** @var \Davajlama\WebHelp\SourceInterface */
+    /** @var mixed */
     private $source;
     
     /** @var \Closure */
     private $callback;
 
     /**
-     * @param \Davajlama\WebHelp\SourceInterface $source
+     * Builder constructor.
+     * @param mixed $source
      * @param \Closure $callback
      */
-    public function __construct(\Davajlama\WebBuilder\SourceInterface $source, \Closure $callback)
+    public function __construct($source, \Closure $callback)
     {
-        $this->source = $source;
+        $this->source   = $source;
         $this->callback = $callback;
     }
-    
+
     public function build(WebBuilder $builder)
     {
         $cb = $this->callback->bindTo($builder);
@@ -30,7 +31,7 @@ class Builder
     }
     
     /**
-     * @return SourceInterface
+     * @return mixed
      */
     public function getSource()
     {

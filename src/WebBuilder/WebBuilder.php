@@ -1,6 +1,7 @@
 <?php
 
 namespace Davajlama\WebBuilder;
+use Davajlama\WebBuilder\Source\DirectorySource;
 
 /**
  * @author David Bittner
@@ -14,11 +15,6 @@ class WebBuilder implements \ArrayAccess
     /** @var Builder[] */
     private $builders = [];
 
-    //public function watch($group = null)
-    //{
-        
-    //}
-    
     public function build($group = null)
     {
         if($group === null) {
@@ -39,22 +35,18 @@ class WebBuilder implements \ArrayAccess
             }
         }
     }
-    
+
+    /**
+     * @param mixed $source
+     * @return Carriage
+     */
     public function source($source)
     {
-        if($source instanceof SourceInterface) {
-            return new Carriage($this, $source);
-        }
-        
         if(is_string($source) && is_dir($source)) {
-            return new Carriage($this, new Sources\DirectorySource($source));
+            return new Carriage($this, new DirectorySource($source));
         }
-        
-        if(is_string($source) && is_file($source)) {
-            return new Carriage($this, new Sources\FileSource($source));
-        }
-        
-        throw new \Exception("Unknown type of source.");
+
+        return new Carriage($this, $source);
     }
     
     /**

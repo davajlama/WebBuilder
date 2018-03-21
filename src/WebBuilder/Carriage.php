@@ -8,33 +8,34 @@ namespace Davajlama\WebBuilder;
 class Carriage
 {
     /** @var WebBuilder */
-    private $webhelp;
+    private $builder;
     
-    /** @var SourceInterface */
+    /** @var mixed */
     private $source;
-    
+
     /**
-     * @param \Davajlama\WebHelp\WebBuilder $webhelp
-     * @param \Davajlama\WebHelp\SourceInterface $source
+     * Carriage constructor.
+     * @param WebBuilder $webhelp
+     * @param mixed $source
      */
-    public function __construct(WebBuilder $webhelp, SourceInterface $source)
+    public function __construct(WebBuilder $webhelp, $source)
     {
-        $this->webhelp  = $webhelp;
+        $this->builder  = $webhelp;
         $this->source   = $source;
     }
 
     public function build(\Closure $callback)
     {
-        $this->webhelp->addBuilder(new \Davajlama\WebBuilder\Builder($this->source, $callback));
+        $this->builder->addBuilder(new Builder($this->source, $callback));
     }
-    
+
     /**
-     * @param \Davajlama\WebHelp\callable $callback
-     * @return self
+     * @param callable $callback
+     * @return Carriage
      */
     public function pipe(callable $callback)
     {
-        return new self($this->webhelp, $callback($this->source));
+        return new self($this->builder, $callback($this->source));
     }
     
 }
