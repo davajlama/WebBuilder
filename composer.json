@@ -1,0 +1,15 @@
+{
+  "name": "davajlama/webbuilder",
+  "description": "Web sources builder",
+  "authors": [
+    { "name": "David Bittner" }
+  ],
+
+  "require-dev": {
+    "phpunit/phpunit": "5.5.*"
+  },
+
+  "autoload": {
+    "classmap": ["src/"]
+  }
+}
